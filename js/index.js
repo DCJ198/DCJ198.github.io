@@ -50,22 +50,30 @@ window.addEventListener("scroll", () => {
 //scroll
 const links = [...document.querySelectorAll(".nav-link")];
 
-links.map((link)=>{
-    link.addEventListener('click',(e) => {
-        e.preventDefault();
+links.map((link) => {
+    link.addEventListener('click', (e) => {
+        const href = e.currentTarget.getAttribute("href");
 
-        const id = e.currentTarget.getAttribute("href").slice(1);
-        const el = document.getElementById(id);
-        const navHeight = navigation.getBoundingClientRect().height;
-        const fix = navigation.classList.contains("fix");
-        let position = el.offsetTop - navHeight;
+        if (href.startsWith("#")) { // Verifică dacă link-ul este unul intern (ancoră)
+            e.preventDefault();
 
-        window.scrollTo({
-            left: 0,
-            top: position,
-        });
+            const id = href.slice(1);
+            const el = document.getElementById(id);
+            const navHeight = navigation.getBoundingClientRect().height;
 
-        navList.classList.remove("open");
+            if (el) {
+                let position = el.offsetTop - navHeight;
+
+                window.scrollTo({
+                    left: 0,
+                    top: position,
+                });
+
+                navList.classList.remove("open");
+            } else {
+                console.error(`Elementul cu id-ul ${id} nu există pe pagină.`);
+            }
+        }
     });
 });
 

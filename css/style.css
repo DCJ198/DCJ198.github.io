@@ -222,6 +222,7 @@ a{
         color: var(--text-1);
         font-weight: 500;
     }
+
     .hamburger{
         display: flex;
     }
